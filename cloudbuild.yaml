@@ -1,17 +1,16 @@
 ---
 steps:
 - name: amazonlinux:latest
-  dir: /opt/app
   args:
   - '/bin/bash'
   - '-c'
-  - './build_lambda.sh'
+  - './gcp_build_lambda.sh'
 - name: xueshanf/awscli
   args:
   - 'aws'
   - 's3'
   - 'cp'
-  - '/opt/app/lambda.zip'
+  - './build/lambda.zip'
   - 's3://antivirus.workpop.com/lambda/${SHORT_SHA}.zip'
   env:
   - 'AWS_ACCESS_KEY_ID=${_AWS_ACCESS_KEY_ID}'
