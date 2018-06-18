@@ -1,11 +1,7 @@
 ---
 steps:
 - name: amazonlinux:latest
-  args:
-  - 'mkdir'
-  - '-p'
-  - '/opt/app'
-- name: amazonlinux:latest
+  dir: /opt/app
   args:
   - '/bin/bash'
   - '-c'
