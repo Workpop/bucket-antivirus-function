@@ -2,6 +2,11 @@
 steps:
 - name: amazonlinux:latest
   args:
+  - 'mkdir'
+  - '-p'
+  - '/opt/app'
+- name: amazonlinux:latest
+  args:
   - '/bin/bash'
   - '-c'
   - './build_lambda.sh'
@@ -10,7 +15,7 @@ steps:
   - 'aws'
   - 's3'
   - 'cp'
-  - './build/labmda.zip'
+  - '/opt/app/lambda.zip'
   - 's3://antivirus.workpop.com/lambda/${SHORT_SHA}.zip'
   env:
   - 'AWS_ACCESS_KEY_ID=${_AWS_ACCESS_KEY_ID}'
