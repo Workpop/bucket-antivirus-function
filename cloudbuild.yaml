@@ -1,0 +1,18 @@
+---
+steps:
+- name: amazonlinux:latest
+  args:
+  - '/bin/bash'
+  - '-c'
+  - './build_lambda.sh'
+- name: xueshanf/awscli
+  args:
+  - 'aws'
+  - 's3'
+  - 'cp'
+  - './build/labmda.zip'
+  - 's3://antivirus.workpop.com/lambda/${SHORT_SHA}.zip'
+  env:
+  - 'AWS_ACCESS_KEY_ID=${_AWS_ACCESS_KEY_ID}'
+  - 'AWS_SECRET_ACCESS_KEY=${_AWS_SECRET_ACCESS_KEY}'
+timeout: '20m'
