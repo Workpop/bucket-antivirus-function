@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-lambda_output_file=./build/lambda.zip
+lambda_output_file=build/lambda.zip
 
 set -e
 
@@ -38,4 +38,4 @@ echo "DatabaseMirror database.clamav.net" > bin/freshclam.conf
 mkdir -p build
 zip -r9 $lambda_output_file *.py bin
 cd env/lib/python2.7/site-packages
-zip -r9 $lambda_output_file *
+zip -r9 ../../../../$lambda_output_file *
