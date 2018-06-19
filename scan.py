@@ -145,24 +145,17 @@ def lambda_handler(event, context):
 
     # Only conduct virus scan + macro checks if the file mime is an expected one
     # for documents and images that are supported.
-    if mime_is_allowed:
-        print("[MIME] validation of s3://%s is OK." % s3_display_url)
-
+    if !mime.validate_mime(file_path):
+        print("[mime] validation of s3://%s failed" % s3_display_url)
+        scan_result = AV_STATUS_INFECTED
+    elif ole.has_macros(file_path):
+        print("[olevba] scan of s3://%s found macros" % s3_display_url)
+        scan_result = AV_STATUS_INFECTED
+    else:
         # ClamAV
         clamav.update_defs_from_s3(AV_DEFINITION_S3_BUCKET, AV_DEFINITION_S3_PREFIX)
-        clamscan_result = clamav.scan_file(file_path)
+        scan_result = clamav.scan_file(file_path)
         print("[ClamAV] Scan of s3://%s resulted in %s\n" % (s3_display_url, clamscan_result))
-
-        # olevba
-        ole_result = ole.scan_file(file_path)
-        print("[olevba] Scan of s3://%s resulted in %s\n" % (s3_display_url, ole_result))
-
-        # If any supported scans are infected, consider the file infected
-        results = [clamscan_result, ole_result]
-        scan_result = AV_STATUS_INFECTED if AV_STATUS_INFECTED in results else AV_STATUS_CLEAN
-    else:
-        print("[MIME] validation of s3://%s FAILED." % s3_display_url)
-        scan_result = AV_STATUS_INFECTED
 
     print("FINAL result for s3://%s result is %s" % (s3_display_url, scan_result))
 
