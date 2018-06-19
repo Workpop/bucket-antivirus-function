@@ -18,7 +18,7 @@ def has_macros(path):
         return False
 
     # consider any file that contains macros to be INFECTED
-    result = vba_parser.detect_vba_macros():
+    result = vba_parser.detect_vba_macros()
     vba_parser.close()
 
     return result
