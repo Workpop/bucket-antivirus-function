@@ -141,11 +141,11 @@ def lambda_handler(event, context):
     s3_display_url = os.path.join(s3_object.bucket_name, s3_object.key)
 
     # Validate file MIME type is expected
-    mime_is_allowed = mime.validate_mime(file_path)
+    mime_is_invalid = !mime.validate_mime(file_path)
 
     # Only conduct virus scan + macro checks if the file mime is an expected one
     # for documents and images that are supported.
-    if !mime.validate_mime(file_path):
+    if mime_is_invalid:
         print("[mime] validation of s3://%s failed" % s3_display_url)
         scan_result = AV_STATUS_INFECTED
     elif ole.has_macros(file_path):
