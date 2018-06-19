@@ -7,3 +7,4 @@ requests==2.18.3
 simplejson==3.11.1
 urllib3==1.22
 oletools==0.53.1
+python-magic==0.4.15
