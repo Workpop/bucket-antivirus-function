@@ -152,7 +152,7 @@ def lambda_handler(event, context):
         # ClamAV
         clamav.update_defs_from_s3(AV_DEFINITION_S3_BUCKET, AV_DEFINITION_S3_PREFIX)
         scan_result = clamav.scan_file(file_path)
-        print("[clamav] scan of s3://%s resulted in %s\n" % (s3_display_url, clamscan_result))
+        print("[clamav] scan of s3://%s resulted in %s\n" % (s3_display_url, scan_result))
 
     print("FINAL result for s3://%s result is %s" % (s3_display_url, scan_result))
 
