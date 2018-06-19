@@ -140,12 +140,9 @@ def lambda_handler(event, context):
     file_path = download_s3_object(s3_object, "/tmp")
     s3_display_url = os.path.join(s3_object.bucket_name, s3_object.key)
 
-    # Validate file MIME type is expected
-    mime_is_invalid = !mime.validate_mime(file_path)
-
     # Only conduct virus scan + macro checks if the file mime is an expected one
     # for documents and images that are supported.
-    if mime_is_invalid:
+    if not mime.validate_mime(file_path):
         print("[mime] validation of s3://%s failed" % s3_display_url)
         scan_result = AV_STATUS_INFECTED
     elif ole.has_macros(file_path):
@@ -155,7 +152,7 @@ def lambda_handler(event, context):
         # ClamAV
         clamav.update_defs_from_s3(AV_DEFINITION_S3_BUCKET, AV_DEFINITION_S3_PREFIX)
         scan_result = clamav.scan_file(file_path)
-        print("[ClamAV] Scan of s3://%s resulted in %s\n" % (s3_display_url, clamscan_result))
+        print("[clamav] scan of s3://%s resulted in %s\n" % (s3_display_url, clamscan_result))
 
     print("FINAL result for s3://%s result is %s" % (s3_display_url, scan_result))
 
