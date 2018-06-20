@@ -2,8 +2,6 @@ import re
 import magic
 
 document_mime_types = [
-    # .txt
-    'text/plain',
     # .docx, .docm
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     # .doc
@@ -12,7 +10,7 @@ document_mime_types = [
     'application/pdf',
 ]
 
-image_mime_pattern = '^image\/[\w-]+$'
+image_mime_pattern = '^image\/[\w+-]+$'
 
 def validate_mime(file_path):
     """

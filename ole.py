@@ -1,4 +1,3 @@
-from common import *
 from oletools.olevba import VBA_Parser, FileOpenError
 
 def has_macros(path):
