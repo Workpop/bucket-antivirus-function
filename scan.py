@@ -156,10 +156,17 @@ def lambda_handler(event, context):
 
     print("FINAL result for s3://%s result is %s" % (s3_display_url, scan_result))
 
-    # store results
-    if "AV_UPDATE_METADATA" in os.environ:
+    # write back results results
+    if "DRYRUN" in os.environ:
+        print("DRYRUN set. Skipping scan results write for s3://%s" % s3_display_url)
+    elif "AV_UPDATE_METADATA" in os.environ:
+        # Write s3 Object metadata AND tags
         set_av_metadata(s3_object, scan_result)
-    set_av_tags(s3_object, scan_result)
+        set_av_tags(s3_object, scan_result)
+    else:
+        # set tags only
+        set_av_tags(s3_object, scan_result)
+
     sns_scan_results(s3_object, scan_result)
 
     metrics.send(env=ENV, bucket=s3_object.bucket_name, key=s3_object.key, status=scan_result)
