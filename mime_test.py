@@ -1,8 +1,11 @@
 import mime
 
 def test_plaintext():
-    assert mime.validate_mime('test/plain.txt') == False
-    assert mime.validate_mime('test/eicar.pdf') == False
+    assert mime.validate_mime('test/plain.txt') == True
+    assert mime.validate_mime('test/eicar.pdf') == True
+
+def test_rtf():
+    assert mime.validate_mime('test/richtext.rtf') == True
 
 def test_doc():
     assert mime.validate_mime('test/clean.doc') == True

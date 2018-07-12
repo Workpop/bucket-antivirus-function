@@ -2,6 +2,8 @@ import re
 import magic
 
 document_mime_types = [
+    'text/plain',
+    'text/rtf',
     # .docx, .docm
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     # .doc
