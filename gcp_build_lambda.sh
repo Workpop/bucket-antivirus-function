@@ -19,7 +19,7 @@ lambda_output_file=build/lambda.zip
 set -e
 
 yum update -y
-yum install -y cpio python27-pip zip
+yum install -y cpio python-pip zip
 pip install --no-cache-dir virtualenv
 virtualenv env
 . env/bin/activate
